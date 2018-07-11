@@ -34,6 +34,8 @@ public class Jeopardy implements ActionListener {
 	int score = 0;
 	JLabel scoreBox = new JLabel("0");
 	int buttonCount = 0;
+	
+	Clip clip;
 
 	public static void main(String[] args) {
 		new Jeopardy().start();
@@ -45,29 +47,29 @@ public class Jeopardy implements ActionListener {
 		frame.setLayout(new BorderLayout());
 		
 		// 1. Make the frame show up
-
+		frame.setVisible(true);
 		// 2. Give your frame a title
-		
+		frame.setTitle("Jeapordy");
 		// 3. Create a JPanel variable to hold the header using the createHeader method
-		
+		JPanel header= createHeader("Soccer");
 		// 4. Add the header component to the quizPanel
-		
+		quizPanel.add(header);
 		// 5. Add the quizPanel to the frame
-
+		frame.add(quizPanel);
 		
 		// 6. Use the createButton method to set the value of firstButton 
-	
+		firstButton= createButton("100");
 	// 7. Add the firstButton to the quizPanel
-		
+		quizPanel.add(firstButton);
 		// 8. Write the code inside the createButton() method below. Check that your game looks like Figure 1 in the Jeopardy Handout - http://bit.ly/1bvnvd4.
 		
 		// 9. Use the secondButton variable to hold a button using the createButton method
-		
+		secondButton= createButton("200");
 		// 10. Add the secondButton to the quizPanel
-		
+		quizPanel.add(secondButton);
 		// 11. Add action listeners to the buttons (2 lines of code)
-	
-
+	firstButton.addActionListener(this);
+	secondButton.addActionListener(this);
 		// 12. Fill in the actionPerformed() method below
 				
 		frame.pack();
@@ -87,14 +89,13 @@ public class Jeopardy implements ActionListener {
 	
 	private JButton createButton(String dollarAmount) {
 		// Create a new JButton
-		
+		JButton button= new JButton();
 		// Set the text of the button to the dollarAmount
-		
+		button.setText(dollarAmount);
 		// Increment the buttonCount (this should make the layout vertical)
-	
+		buttonCount=buttonCount+1;
 		// Return your new button instead of the temporary button
-		
-		return new JButton("temporary button");
+		return button;
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -102,53 +103,67 @@ public class Jeopardy implements ActionListener {
 		JOptionPane.showMessageDialog(null,"pressed " + ((JButton)arg0.getSource()).getText() + " button");
 
 		// Use the method that plays the jeopardy theme music.
-
+		playJeopardyTheme();
 		JButton buttonPressed = (JButton) arg0.getSource();
 		// If the buttonPressed was the firstButton
-		
+		if(buttonPressed==firstButton) {
 			// Call the askQuestion() method
-			
+			askQuestion("Who won the last Womens Fifa World Cup 2016 finals?", "USA",100);
+		}
 			// Fill in the askQuestion() method. When you play the game, the score should change.
 		
 		// Or if the buttonPressed was the secondButton
-
+		else if(buttonPressed==secondButton) {
+			// Call the askQuestion() method
+			askQuestion("Where was the first World Cup held?", "Uruguay",200);
+		}
 
 			// Call the askQuestion() method with a harder question
 			
 		
 		// Clear the button text (set the button text to nothing)
-		
+		buttonPressed.setText("");
 	}
 
 	private void askQuestion(String question, String correctAnswer, int prizeMoney) {
-		// Remove this temporary message
-		JOptionPane.showMessageDialog(null, "this is where the question will be asked");
-		// Use a pop up to ask the user the question
-	
-		// If the answer is correct
 		
+		// Use a pop up to ask the user the question
+		String answer= JOptionPane.showInputDialog(null, "Who won the 2016 Women's Fifa World Cup finals?");
+		
+		// If the answer is correct
+		clip.stop();
+		if(answer.equalsIgnoreCase("USA")) {
+			score=prizeMoney+score;
+			updateScore();
+			JOptionPane.showMessageDialog(null, "CORRECT");
+		}
 			// Increase the score by the prizeMoney
-			
+		else if(answer.equalsIgnoreCase("US")) {
+			score=prizeMoney+score;
+			updateScore();
+			JOptionPane.showMessageDialog(null, "CORRECT");
+		}
 			// Call the updateScore() method
 			
 			// Pop up a message to tell the user they were correct
 			
 		// Otherwise
-		
+			else{
+			
 			// Decrement the score by the prizeMoney
-			
+			score=score-prizeMoney;
 			// Pop up a message to tell the user the correct answer
-			
+			JOptionPane.showMessageDialog(null, "WRONG. The correct answer is USA.");
 			// Call the updateScore() method
-			
-		
+			updateScore();
+			}
 	}
 
 
 public void playJeopardyTheme() {
 		try {
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("/Users/League/Google Drive/league-sounds/jeopardy.wav"));
-			Clip clip = AudioSystem.getClip();
+			clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();
 		} catch (Exception ex) {
