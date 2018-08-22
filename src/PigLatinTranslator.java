@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -11,7 +12,7 @@ private JFrame frame= new JFrame();
 private JPanel panel= new JPanel();
 private JButton button= new JButton();
 private static JTextField tf1= new JTextField(20);
-private JTextField tf2= new JTextField(20);
+private JLabel label= new JLabel();
 
 
 void start() {
@@ -21,7 +22,7 @@ void start() {
 		panel.add(button);
 		button.addActionListener(this);
 	button.setText("translate");
-	panel.add(tf2);
+	panel.add(label);
 	
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.pack();
@@ -37,9 +38,11 @@ public static void main(String[] args) {
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
 	System.out.println("clicked!");
-	String tf2s="";
-	tf2s= translate(""+tf1);
-	tf2.setText(tf2s);
+	String text=tf1.getText();
+	
+	String translate= translate(text);
+	label.setText(translate);
+	frame.pack();
 }
 
     /**

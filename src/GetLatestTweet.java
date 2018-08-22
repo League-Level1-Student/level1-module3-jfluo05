@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -15,6 +16,7 @@ import twitter4j.auth.AccessToken;
 public class GetLatestTweet implements ActionListener{
 	JFrame frame= new JFrame();
 	JPanel panel= new JPanel();
+	JLabel label= new JLabel();
 	JTextField tF= new JTextField(10);
 	JButton button= new JButton();
 	
@@ -23,6 +25,7 @@ public class GetLatestTweet implements ActionListener{
 		frame.setVisible(true);
 		panel.add(tF);
 		panel.add(button);
+		panel.add(label);
 		button.addActionListener(this);
 		button.setText("Search the Twitterverse");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +67,9 @@ public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
 	
 	System.out.println("Tweet, Tweet");
-	System.out.println(getLatestTweet(""+tF));
+	String Tweet= getLatestTweet(tF.getText());
+	label.setText(Tweet);
+	frame.pack();
 	
 }
 }
