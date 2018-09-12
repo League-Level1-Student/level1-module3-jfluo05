@@ -16,10 +16,14 @@ public class WhackAMole implements ActionListener {
 	Random r= new Random();
 	JButton moleButton;
 	int count=0;
-	int countEverything=0;
+	int countLosses=0;
+	boolean firstTime=true;
+	Date timeAtStart;
+	
 
 	public static void main(String[] args) {
 		WhackAMole WAM = new WhackAMole();
+		
 		WAM.start();
 	}
 
@@ -33,6 +37,7 @@ public class WhackAMole implements ActionListener {
 			if (i == m) {
 			 button.setText("Mole");
 			 moleButton= button;
+			 
 			}
 		}
 
@@ -48,11 +53,18 @@ public class WhackAMole implements ActionListener {
 		drawButtons(num);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		if(firstTime) {
+			
+		 timeAtStart= new Date();
+		 firstTime=false;
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
 		
 		if(e.getSource()==moleButton) {
 			System.out.println("You hit the mole!");
@@ -60,17 +72,19 @@ public class WhackAMole implements ActionListener {
 			frame.setVisible(true);
 			start();
 			playSound("correct.wav");
-			count=count+1;
-			countEverything= countEverything+1;
+			count= count +1;
 		}else {
 			System.out.println("WRONG!!!!");
 			speak("try again");
-			countEverything= countEverything+1;
+			countLosses=countLosses+1;
+			
 		}
 		if(count==10) {
-			Date timeAtStart= new Date();
 		
-			endGame(timeAtStart,countEverything);
+			endGame(timeAtStart,count);
+		}else if(countLosses==5) {
+			System.out.println("You have lost the game.");
+			endGame(timeAtStart, countLosses);
 		}
 		
 	}
