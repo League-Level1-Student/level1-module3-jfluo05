@@ -25,14 +25,20 @@ public static void main(String[] args) {
 	NQ.addMovie(littleGiants);
 	NQ.addMovie(karateKid);
 	
-	System.out.println(pitchPerfect);
-	System.out.println(crazyRichAsians);
-	System.out.println(coolRunnings);
-	System.out.println(littleGiants);
-	System.out.println(karateKid);
+	System.out.println(pitchPerfect.getTicketPrice());
+	
+	System.out.println(crazyRichAsians.getTicketPrice());
+	
+	System.out.println(coolRunnings.getTicketPrice());
+	
+	System.out.println(littleGiants.getTicketPrice());
+	
+	System.out.println(karateKid.getTicketPrice());
+	
+	
 
 	Movie m= NQ.getBestMovie();
 	System.out.println("The best movie is "+m.getTitle());
-	System.out.println("The second best movie is Crazy Rich Asians");
+	System.out.println("The second best movie is cool Runnings");
 }
 }
