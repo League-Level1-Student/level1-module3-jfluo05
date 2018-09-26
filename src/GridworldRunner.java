@@ -8,6 +8,7 @@ import info.gridworld.world.World;
 public class GridworldRunner {
 	
 	public static void main(String[] args) {
+		Flower flower;
 		World world= new World();
 		Bug bug= new Bug();
 		Location location= new Location(0, 0);
@@ -16,10 +17,12 @@ public class GridworldRunner {
 		world.add(location, bug);
 		bug.turn();
 		bug.turn();
+		
 		for(int i=0;i<100; i++) {
-			Flower flower= new Flower();
+			flower= new Flower();
 			world.add(location, flower);
 		}
+		
 		world.show();
 		
 	}
